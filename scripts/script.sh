@@ -1,2 +1,2 @@
-afplay ../data/steiner.wav & python leap_motion.py
-python video.py
+afplay ../data/steiner.wav & python leap_motion.py diane steiner
+python video.py diane steiner

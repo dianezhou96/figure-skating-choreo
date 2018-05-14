@@ -1,3 +1,4 @@
+import sys
 import imageio
 imageio.plugins.ffmpeg.download()
 from moviepy.editor import *
@@ -11,11 +12,9 @@ def make_video(choreo_file, music_file, video_clips):
 	choreo_object = open(choreo_file, 'r')
 	choreo = pickle.load(choreo_object)
 	choreo_object.close()
-	# choreo = pickle.load(choreo_file)
-	# format: { timestamp : name
-	#			timestamp : name }
-	times = sorted(choreo.keys())
-	# times.sort() # times in order
+	# format: [ (timestamp, name),
+	#			(timestamp, name) ]
+	# choreo = [(1.0, 'layback'), (10.0, 'layback'), (30.0, 'combospin')]
 
 	music = AudioFileClip(music_file)
 	total_duration = music.duration
@@ -26,11 +25,10 @@ def make_video(choreo_file, music_file, video_clips):
 	clips = []
 
 	# need last_time to be less than the total_duration
-	# also need to have more elements left in choreo
 	while last_time < total_duration:
 
-		if index_time < len(times):
-			next_time = times[index_time]
+		if index_time < len(choreo):
+			next_time, element = choreo[index_time]
 		else:
 			next_time = total_duration
 
@@ -41,13 +39,13 @@ def make_video(choreo_file, music_file, video_clips):
 
 		# ready for next clip
 		else:
-			next_clip = video_clips[choreo[next_time]]
+			next_clip = video_clips[element]
 
 			# check if there is another clip; this one needs to end before it
 			try:
-				next_next_time = times[index_time+1]
+				next_next_time, _ = choreo[index_time+1]
 			except:
-				next_next_time = float('inf')
+				next_next_time = total_duration
 
 			duration = min(next_next_time - next_time, next_clip.duration)
 			next_clip = next_clip.subclip(0, duration)
@@ -59,7 +57,7 @@ def make_video(choreo_file, music_file, video_clips):
 
 	# Make final clip by concatenating and adding music
 	final_clip = concatenate_videoclips(clips)
-	music = music.set_duration(final_clip.duration)
+	music = music.set_duration(min(final_clip.duration, music.duration))
 	final_clip = final_clip.set_audio(music)
 	# final_clip = final_clip.resize((480,270))
 	return final_clip
@@ -70,9 +68,12 @@ def make_clips(clip_files):
 		clips[clip[8:-4]] = VideoFileClip(clip)
 	return clips
 
-choreo_file = 'testfile'
-music_file = '../data/steiner.wav'
-filename = '../video.mp4'
+choreo_file = '../outputs/' + sys.argv[1]
+music_file = '../data/' + sys.argv[2] + '.wav'
+filename = '../outputs/' + sys.argv[1] + '.mp4'
+# choreo_file = 'name'
+# music_file = '../data/steiner.wav'
+# filename = '../outputs/name.mp4'
 clip_names = ['filler', 'axel', 'salchow', 'toeloop', 'loop', 'flip', 'lutz', 'combospin', 'layback']
 for i in range(len(clip_names)):
 	clip_names[i] = '../data/' + clip_names[i] + '.mp4'
