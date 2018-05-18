@@ -116,3 +116,8 @@ def make_wave_buffers(regions_path, wave_path):
     for r in sr.regions:
         buffers[r.name] = WaveBuffer(wave_path, r.start, r.len)
     return buffers
+
+def make_wave_buffer(start, length, wave_path):
+    start_f = int(float(start) * Audio.sample_rate)
+    len_f = int(float(length) * Audio.sample_rate)
+    return WaveBuffer(wave_path, start_f, len_f)

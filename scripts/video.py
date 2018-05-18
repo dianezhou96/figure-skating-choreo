@@ -6,9 +6,6 @@ import pickle
 
 def make_video(choreo_file, music_file, video_clips):
 
-	# print video_clips
-	# return
-
 	choreo_object = open(choreo_file, 'r')
 	choreo = pickle.load(choreo_object)
 	choreo_object.close()
@@ -18,7 +15,6 @@ def make_video(choreo_file, music_file, video_clips):
 
 	music = AudioFileClip(music_file)
 	total_duration = music.duration
-	# print(total_duration)
 
 	index_time = 0
 	last_time = 0
@@ -71,9 +67,6 @@ def make_clips(clip_files):
 choreo_file = '../outputs/' + sys.argv[1]
 music_file = '../data/' + sys.argv[2] + '.wav'
 filename = '../outputs/' + sys.argv[1] + '.mp4'
-# choreo_file = 'name'
-# music_file = '../data/steiner.wav'
-# filename = '../outputs/name.mp4'
 clip_names = ['filler', 'axel', 'salchow', 'toeloop', 'loop', 'flip', 'lutz', 'combospin', 'layback']
 for i in range(len(clip_names)):
 	clip_names[i] = '../data/' + clip_names[i] + '.mp4'

@@ -1,4 +1,2 @@
-# afplay ../data/steiner.wav & python main.py diane steiner
-# python video.py diane steiner
-
-python speech.py & python main.py diane steiner
+python speech.py & python main.py $1 $2
+python video.py $1 $2

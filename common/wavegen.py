@@ -29,6 +29,10 @@ class WaveGenerator(object):
     def play_toggle(self):
         self.paused = not self.paused
 
+    def play_from(self, frame):
+        self.paused = False
+        self.frame = frame
+
     def play(self):
         self.paused = False
 
