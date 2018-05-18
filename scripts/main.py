@@ -152,10 +152,3 @@ class MainWidget(BaseWidget):
 run(MainWidget)
 
 
-### pause --> change start time
-### change to last time and always do time.time() - self.last_time + duration?
-### only do duration += time.time() - self.last_time if not pause 
-### play from or go back x seconds --> change duration to play from time
-###		need to delete choreo as passing by 
-### 'done' --> stop
-

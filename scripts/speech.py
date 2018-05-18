@@ -1,10 +1,7 @@
 from __future__ import division
-
-# import speech_recognition as sr
 import pickle
 
 # [START import_libraries]
-
 import re
 import sys
 
@@ -181,6 +178,8 @@ def main():
 if __name__ == '__main__':
 	dump_text(' ', 'transcript')
 	main()
+
+# import speech_recognition as sr
 
 # class Speech:
 # 	def __init__(self):

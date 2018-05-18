@@ -55,7 +55,6 @@ def make_video(choreo_file, music_file, video_clips):
 	final_clip = concatenate_videoclips(clips)
 	music = music.set_duration(min(final_clip.duration, music.duration))
 	final_clip = final_clip.set_audio(music)
-	# final_clip = final_clip.resize((480,270))
 	return final_clip
 
 def make_clips(clip_files):

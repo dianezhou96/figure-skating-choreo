@@ -7,7 +7,6 @@ import common.leaputil
 import Leap
 
 import numpy as np
-import time
 
 from moviepy.editor import AudioFileClip
 
@@ -51,7 +50,6 @@ class RightHand:
 		self.threshold = 0.5
 
 		self.state = 'None'
-		# self.last_time = time.time()
 
 	def update(self, leap_frame):
 
@@ -115,11 +113,8 @@ class Gesture:
 
 	def recognize(self):
 		leap_frame = self.leap.frame()
-		# timestamp = time.time() - self.start_time
 		left_fingers = self.left_hand.update(leap_frame)
 		right_motion = self.right_hand.update(leap_frame)
-
-		# print(right_motion)
 
 		return left_fingers, right_motion
 
