@@ -1,12 +1,18 @@
 import speech_recognition as sr
-import time
-from pprint import pprint
+import pickle
+# from common.core import *
+# import time
+# from pprint import pprint
 
 class Speech:
 	def __init__(self):
 		self.r = sr.Recognizer()
-		self.choreo = {}
-		self.start_time = time.time()
+		# self.choreo = {}
+		# self.start_time = time.time()
+		self.filename = 'transcript'
+
+		text = ''
+		self.dump_text(text)
 
 	def recognize(self):
 		with sr.Microphone() as source:
@@ -14,19 +20,25 @@ class Speech:
 			audio = self.r.listen(source)
 		try:
 			# self.r.recognize_google(audio)
-			phrase_time = time.time() - self.start_time
-			phrase = self.r.recognize_google(audio)
-			print(phrase)
-			self.choreo[phrase_time] = phrase
-			return phrase
+			# phrase_time = time.time() - self.start_time
+			text = self.r.recognize_google(audio)
+			print(text)
+			# self.choreo[phrase_time] = phrase
+			self.dump_text(text)
 			# self.queue.append(phrase)
 		except sr.UnknownValueError:
 			print("Google could not understand audio")
 		except sr.RequestError as e:
 		    print("Google error; {0}".format(e))
 
-	def get_choreo(self):
-		return self.choreo
+	def dump_text(self, text):
+		text_object = open(self.filename, 'wb')
+		pickle.dump(text, text_object)
+		text_object.close()
+
+
+	# def get_choreo(self):
+	# 	return self.choreo
 
 	# def pop_queue(self):
 	# 	try:
@@ -35,12 +47,15 @@ class Speech:
 	# 		return None
 
 s = Speech()
+# s.dump_text('')
 phrase = 1
 while phrase != 'stop':
 	phrase = s.recognize()
 
-choreo = s.get_queue()
-pprint(choreo)
+
+
+# choreo = s.get_queue()
+# pprint(choreo)
 
 # choreo = [(u'jump', 4.565325021743774),
 #  (u"spin", 8.527209997177124),
